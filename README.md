@@ -1,5 +1,3 @@
-# Top-50-Lyrics
+# Artist Sentiment Analysis
 
-#This is a project designed to pull lyrics directly off of Genius.com and analyze them. It is a work in progress and the scope of the analysis is changing
-
-#it current is able to successfully look up an artist and then pull 10 songs from that artist
+This project allows you to successfully enter an artist into genius.com's API, pull out some of their songs, then get those lyrics for those songs, then run a sentiment analysis on each of the songs, returning the song's sentiment analysis along with the name of the song.
