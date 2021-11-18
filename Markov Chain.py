@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[1]:
-
-
 import sqlite3
 import re
 import random 
@@ -13,10 +9,6 @@ cur=conn.cursor()
 cur.execute('SELECT lyrics from songs')
 rows = list(cur.fetchall())
 
-
-# In[2]:
-
-
 def generate_markov_chain(text_list):
     model = {}
     for text in text_list:
@@ -24,9 +16,6 @@ def generate_markov_chain(text_list):
         model = conditional_word_counter(model,clean_text)
         model = word_probability(model)
     return model
-
-
-# In[3]:
 
 
 def conditional_word_counter(model,text):
@@ -41,10 +30,6 @@ def conditional_word_counter(model,text):
             model[fragment][next_word] += 1
     return model
 
-
-# In[4]:
-
-
 def word_probability(model):
     for word in model.keys():
         word_sum = 0
@@ -55,18 +40,11 @@ def word_probability(model):
     return model
 
 
-# In[5]:
-
-
 def text_cleaner(text):
     clean_text = text[0].lower()
     clean_text = re.sub('[!;:,<>.?@#$%^&*_~]', "", clean_text)
     clean_text = clean_text.split()
     return clean_text
-
-
-# In[6]:
-
 
 def next_word(model,entered_word):
     word = entered_word[0]
@@ -75,9 +53,6 @@ def next_word(model,entered_word):
     prob_weights = list(model[word].values())
     next_word = random.choices(words,weights=prob_weights)
     return next_word
-
-
-# In[7]:
 
 
 def generate_lyrics(model,initial_word,sentence_length):
