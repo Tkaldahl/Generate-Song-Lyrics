@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 #import libraries
 
 import requests
@@ -15,10 +12,6 @@ import math
 import pandas as pd
 from datetime import date
 
-
-# In[2]:
-
-
 def artist_song_page_lookup(artist_api,token,page):
     base_url = 'https://api.genius.com'
     artist_url = base_url + '{}/songs'.format(artist_api)
@@ -26,10 +19,6 @@ def artist_song_page_lookup(artist_api,token,page):
     params = {'sort':'popularity','page': page} # the current page
     response = requests.get(artist_url, headers=headers,params=params).json()['response']['songs']
     return response
-
-
-# In[13]:
-
 
 #looks up the artist into genius.com's API
 def artist_lookup(artist_name,token):
@@ -46,9 +35,6 @@ def artist_lookup(artist_name,token):
     return api_path
 
 
-# In[14]:
-
-
 def artist_data(artist_list,token):
     artists_df = []
     for artist in artist_list:
@@ -58,10 +44,6 @@ def artist_data(artist_list,token):
             artists_df.append(artist_df)
     return artists_df
         
-
-
-# In[43]:
-
 
 #pulls the Urls and song title out of the API's output
 def song_details(response):
@@ -78,8 +60,6 @@ def song_details(response):
     return urls,songs,artist,api_paths
 
 
-# In[44]:
-
 
 #scrapes the lyrics from the website, using the given urls
 def lyric_scraper(urls):
@@ -95,9 +75,6 @@ def lyric_scraper(urls):
     return lyrics
 
 
-# In[45]:
-
-
 #pulls the verse labels out of the lyrics
 def lyrics_cleaner(song):
     verse_labels_removed = re.sub("[\(\[].*?[\)\]]", "", song)
@@ -105,9 +82,6 @@ def lyrics_cleaner(song):
     hyperlinks_removed = re.sub(r"EmbedShare URLCopyEmbedCopy",'',hyperlinks_removed)
     cleaned_song= re.sub( r"([A-Z])", r" \1",hyperlinks_removed)
     return cleaned_song
-
-
-# In[46]:
 
 
 def get_all_artist_songs(artist_api,token):
@@ -122,10 +96,6 @@ def get_all_artist_songs(artist_api,token):
         if len(page_songs) == 0:
             next_page = False
     return songs
-
-
-# In[47]:
-
 
 def get_song_info(api_paths,token):
     albums = []
@@ -148,9 +118,6 @@ def get_song_info(api_paths,token):
     return albums, release_dates,
 
 
-# In[41]:
-
-
 def song_df(artist_api,token):
     labels = {0:'song',1:'artist',2:'lyrics',3:'url',4:'album',5:'release_date'}
     response = get_all_artist_songs(artist_api,token)
@@ -162,10 +129,6 @@ def song_df(artist_api,token):
     song_df = blank_song_remover(song_df).reset_index(drop=True)
     return song_df
 
-
-# In[4]:
-
-
 def remastered_song_remover(page_songs, artist_api):
     duplicate_flags = ['remix','sound track', 'live','music-video','version', 'grammys', 'mix', 'edit', 'vma', 'acoustic', 'demo', 'statement', 'radio', 'session', 'awards', 'extended', 'setlist']
     songs_with_lyrics = [song for song in page_songs if song['url'].endswith('-lyrics')]
@@ -173,10 +136,6 @@ def remastered_song_remover(page_songs, artist_api):
     unique_songs = [song for song in unique_songs if song['primary_artist']['api_path'] == artist_api]
     unique_songs = [song for song in unique_songs if song['lyrics_state'] == 'complete']
     return unique_songs
-
-
-# In[5]:
-
 
 def blank_song_remover(song_df):
     today = date.today()
@@ -187,18 +146,11 @@ def blank_song_remover(song_df):
     song_df = song_df[song_df['release_date'] != 'None']
     return song_df
 
-
-# In[23]:
-
-
 def song_remover(song_df,songs_to_remove):
     song_df = song_df[~song_df.lyrics.isin(songs_to_remove)]
     return song_df
 
-
-# In[25]:
-
-
+#these will be moved over when I have some examples, but exist here for now as a reference. They were flagged with the duplicate detection functions
 songs_to_remove_gaga = ['Yoü and I (Joe Biden Election Night Rally 2020)','Angel Down (Work Tape)','Boys Boys Boys (Manhattan Clique)']
 gaga_clean_df = song_remover(gaga_df,songs_to_remove_gaga)
 
