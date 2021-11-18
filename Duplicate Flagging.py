@@ -1,18 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 def stopword_remover(song):
     stop_words = set(nltk.corpus.stopwords.words('english'))
     lyrics = song.lower()
     word_list = [word for word in lyrics.split() if word not in stop_words]
     return word_list
-
-
-# In[ ]:
-
 
 def word_counter(lyrics):
     word_dict = {}
@@ -23,10 +16,6 @@ def word_counter(lyrics):
         else:
             word_dict[word] = 1
     return word_dict
-
-
-# In[ ]:
-
 
 def cos_sim(vector1, vector2):
     
@@ -44,19 +33,11 @@ def cos_sim(vector1, vector2):
         similarity = product_summation/length
     return similarity
 
-
-# In[ ]:
-
-
 def word2vec(song_lyrics):
     counted_words = word_counter(song_lyrics)
     word_set = set(counted_words)
     length = math.sqrt(sum(c*c for c in counted_words.values()))
     return counted_words,word_set,length
-
-
-# In[ ]:
-
 
 def get_similarity(song_df,similarity_threshold):
     songs = song_df['song'].to_list()
@@ -75,4 +56,3 @@ def get_similarity(song_df,similarity_threshold):
                 pass
             
     return results
-
