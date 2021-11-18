@@ -1,12 +1,6 @@
-# Artist Sentiment Analysis
+# Generate Song Lyrics
 
-This project allows you to successfully enter an artist into genius.com's API, pull out some of their songs, then get those lyrics for those songs, then run a sentiment analysis on each of the songs, returning the song's sentiment analysis along with the name of the song. Scores vary between -1 for negative and 1 for positive. At this current time, all inputs must be declared a string, by surrounding them with ''.
+This project involves creating an ETL that allows all song lyrics to be scraped for a list of artists. It then allows potential duplicate songs to be flagged to streamline manual cleaning. From there, it allows a markov chain to be trained and stored as a dictionary for reference. 
 
-Right now, this is just a technical coding sample, no user interface has been built. This is coming soon!
-
-Planned additions
-
-1. Adding in functionality to get more songs & functionality to see if you have already scraped a song
-2. Adding functionality to store more songs into a MongoDB
-3. More NLP & other types of analysis
-4. Interative visualizations
+Coming Changes
+1. This project will eventually contain code to deploy the markov chain itself to flask, for a user to use. Unlike many similar projects, this markov chain will be trained on all artists songs, so allows the user to choose a list of artists will not be available. This is to better simulate how software engineering is used in a data science context, as opposed to webdev. 
