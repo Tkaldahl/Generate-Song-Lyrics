@@ -4,10 +4,6 @@ import sqlite3
 import re
 import random 
 
-conn = sqlite3.connect('C:\sqlite\db\songs.db')
-cur=conn.cursor()
-cur.execute('SELECT lyrics from songs')
-rows = list(cur.fetchall())
 
 def generate_markov_chain(text_list):
     model = {}
